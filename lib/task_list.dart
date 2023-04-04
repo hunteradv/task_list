@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_list/task_create.dart';
 
 class TaskListPage extends StatelessWidget {
   const TaskListPage({super.key});
@@ -10,9 +11,9 @@ class TaskListPage extends StatelessWidget {
         title: const Text("Tasks"),
       ),
       body: Container(),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
-        child: Icon(Icons.add),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.of(context).pushNamed('/task_create'),
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -11,8 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: TaskListPage(),
+    return MaterialApp(
+      initialRoute: '/task_list',
+      routes: {
+        '/task_create': (context) => const TaskCreatePage(),
+        '/task_list': (context) => const TaskListPage()
+      },
     );
   }
 }

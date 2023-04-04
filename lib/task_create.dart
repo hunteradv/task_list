@@ -9,10 +9,20 @@ class TaskCreatePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("New task"),
       ),
-      body: Container(),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
-        child: Icon(Icons.add),
+      body: Container(
+        margin: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const TextField(),
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text("Adicionar"),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
