@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/task_list',
       routes: {
         '/task_create': (context) => const TaskCreatePage(),
-        '/task_list': (context) => const TaskListPage()
+        '/task_list': (context) => TaskListPage()
       },
     );
   }

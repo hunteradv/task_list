@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:task_list/task_create.dart';
+import 'task.dart';
 
 class TaskListPage extends StatelessWidget {
-  const TaskListPage({super.key});
+  List<Task> tasks = [
+    Task('1', 'Task 1'),
+    Task('2', 'Task 2', priority: 'low'),
+    Task('3', 'Task 3', finished: true),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +14,15 @@ class TaskListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Tasks"),
       ),
-      body: Container(),
+      body: ListView(
+          children: tasks
+              .map((task) => CheckboxListTile(
+                    onChanged: (value) {},
+                    value: task.finished,
+                    title: Text(task.name!),
+                    subtitle: Text(task.priority!),
+                  ))
+              .toList()),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).pushNamed('/task_create'),
         child: const Icon(Icons.add),

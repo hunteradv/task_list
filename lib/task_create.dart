@@ -14,7 +14,7 @@ class TaskCreatePage extends StatelessWidget {
         child: Column(
           children: [
             const TextField(),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () => Navigator.of(context).pop(),
