@@ -1,7 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class TaskCreatePage extends StatelessWidget {
-  const TaskCreatePage({super.key});
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  void add(BuildContext context, String name, bool finished) {
+    firestore.collection('tasks').add({'name': name, 'finished': finished});
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {

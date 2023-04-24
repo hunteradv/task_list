@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/task_list',
       routes: {
-        '/task_create': (context) => const TaskCreatePage(),
+        '/task_create': (context) => TaskCreatePage(),
         '/task_list': (context) => TaskListPage()
       },
     );
