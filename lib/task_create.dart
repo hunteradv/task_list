@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class TaskCreatePage extends StatelessWidget {
+  TaskCreatePage({super.key});
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final TextEditingController txtName = TextEditingController();
 
   void add(BuildContext context, String name, bool finished) {
     firestore.collection('tasks').add({'name': name, 'finished': finished});
-    Navigator.of(context).pop();
   }
 
   @override
@@ -20,11 +21,19 @@ class TaskCreatePage extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: Column(
           children: [
-            const TextField(),
+            TextField(
+              controller: txtName,
+              decoration: const InputDecoration(
+                  hintText: "Digite o que precisa fazer..."),
+              keyboardType: TextInputType.text,
+            ),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  add(context, txtName.text, false);
+                  Navigator.of(context).pop();
+                },
                 child: const Text("Adicionar"),
               ),
             )

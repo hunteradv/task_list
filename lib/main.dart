@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:task_list/task_create.dart';
 import 'package:task_list/task_list.dart';
+import 'package:task_list/user_register.dart';
 
 const firebaseConfig = FirebaseOptions(
     apiKey: "AIzaSyCZyOrEA4Zh44QVjAfqtxARqtRvbfysQ8c",
@@ -23,10 +24,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/task_list',
+      initialRoute: '/user_register',
       routes: {
         '/task_create': (context) => TaskCreatePage(),
-        '/task_list': (context) => TaskListPage()
+        '/task_list': (context) => TaskListPage(),
+        '/user_register': (context) => UserRegisterPage()
       },
     );
   }
