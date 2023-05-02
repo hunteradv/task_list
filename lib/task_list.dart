@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class TaskListPage extends StatelessWidget {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   void update(String id, bool finished) {
     firestore.collection('tasks').doc(id).update({'finished': finished});
@@ -19,11 +21,31 @@ class TaskListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tasks"),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                try {
+                  await auth.signOut();
+
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushNamed('/user_login');
+                } on Exception catch (e) {
+                  String message = e.toString();
+
+                  final snackBar = SnackBar(
+                    content: Text(message),
+                  );
+
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: firestore
               .collection('tasks')
-              .where('finished', isEqualTo: false)
+              .where('uid', isEqualTo: auth.currentUser!.uid)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

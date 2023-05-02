@@ -11,6 +11,8 @@ class UserRegisterPage extends StatelessWidget {
   final TextEditingController txtEmail = TextEditingController();
   final TextEditingController txtPassword = TextEditingController();
 
+  final snackBarErrorMessage = const SnackBar(content: Text("Teste"));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,9 +42,22 @@ class UserRegisterPage extends StatelessWidget {
               margin: const EdgeInsets.only(top: 10),
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  auth.createUserWithEmailAndPassword(
-                      email: txtEmail.text, password: txtPassword.text);
+                onPressed: () async {
+                  try {
+                    await auth.createUserWithEmailAndPassword(
+                        email: txtEmail.text, password: txtPassword.text);
+
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).pushNamed('/user_login');
+                  } on Exception catch (e) {
+                    String message = e.toString();
+
+                    final snackBar = SnackBar(
+                      content: Text(message),
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
                 },
                 child: const Text("Registrar"),
               ),

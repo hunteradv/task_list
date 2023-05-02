@@ -10,22 +10,6 @@ class LoginPage extends StatelessWidget {
   final TextEditingController txtEmail = TextEditingController();
   final TextEditingController txtPassword = TextEditingController();
 
-  Future<User?> login(String email, String password) async {
-    try {
-      UserCredential result = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      User? user = result.user;
-      return user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('Usuário não encontrado para este e-mail.');
-      } else if (e.code == 'wrong-password') {
-        print('Senha incorreta fornecida para este usuário.');
-      }
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,12 +46,22 @@ class LoginPage extends StatelessWidget {
                     // ignore: use_build_context_synchronously
                     Navigator.of(context).pushNamed('/task_list');
                   } on Exception catch (e) {
-                    print(e);
+                    String message = e.toString();
+
+                    final snackBar = SnackBar(
+                      content: Text(message),
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
                 child: const Text("Login"),
               ),
-            )
+            ),
+            TextButton(
+                onPressed: () =>
+                    Navigator.of(context).pushNamed('/user_register'),
+                child: const Text("Criar conta")),
           ],
         ),
       ),
